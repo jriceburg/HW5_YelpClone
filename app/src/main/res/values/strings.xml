@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">HW5_YelpClone</string>
     <string name="num_reviews">0 Reviews</string>
-    <string name="distance">1.53 mi</string>
+    <string name="distance">1.53 m</string>
     <string name="address">23 Main St, Hartford CT</string>
     <string name="business_name">Bistro</string>
     <string name="category">Comfort Food</string>

@@ -34,7 +34,7 @@ class MyRecyclerAdapter(private val restaurantList: ArrayList<RestaurantInfo>)
         val distance        = itemView.tv_distance
         val address         = itemView.tv_address
         val category        = itemView.tv_cat
-        val restaurantImg   = itemView.image_restaurant
+        val businessImg   = itemView.image_restaurant
         val price           = itemView.tv_price
 
     }
@@ -77,7 +77,7 @@ class MyRecyclerAdapter(private val restaurantList: ArrayList<RestaurantInfo>)
         holder.address.text         = currentItem.address
         holder.category.text        = currentItem.category
         holder.price.text           = currentItem.price
-        holder.restaurantImg.setImageResource(currentItem.restaurantImg)
+        holder.businessImg.setImageResource(currentItem.restaurantImg)
 
         Log.d(TAG, "onBindViewHolder: $position")
 
