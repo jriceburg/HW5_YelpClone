@@ -1,9 +1,12 @@
 package com.example.hw5_yelpclone
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 }
-                
+
             })
     }
 
@@ -86,8 +89,29 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG,": Food search: $foodTerm, Location search: $location")
 
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Search term missing")
+        dialog.setMessage("Search term & location cannot be empty. Please enter a search term & location")
+        // Set an icon, optional
+        dialog.setIcon(android.R.drawable.ic_delete)
+        dialog.setNeutralButton("Okay") { dialog, which ->
+            // code to run when Cancel is pressed
+        }
+
+        if(et_food_search.text.isBlank() || et_location_search.text.isBlank()){
+            val dialogBox = dialog.create()
+            dialogBox.show()
+        }
+
+        et_location_search.hideKeyboard()
+
     }
 
+    fun View.hideKeyboard() {
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as
+                InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    }
 
 
 
