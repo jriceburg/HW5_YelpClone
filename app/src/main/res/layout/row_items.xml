@@ -74,11 +74,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_cat"
+        android:id="@+id/tv_cat1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="80dp"
         android:text="@string/category"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -87,9 +87,19 @@
         android:id="@+id/tv_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="81dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
         android:text="@string/price"
-        app:layout_constraintStart_toEndOf="@+id/tv_cat"
+        app:layout_constraintStart_toEndOf="@+id/tv_cat2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_cat2"
+        android:layout_width="82dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/category2"
+        app:layout_constraintStart_toEndOf="@+id/tv_cat1"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

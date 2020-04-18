@@ -3,6 +3,7 @@ package com.example.hw5_yelpclone
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -34,27 +35,29 @@ interface UserService {
     @GET("businesses/search")
     fun searchRestraunts(@Header("Authorization") authHeader: String
                          , @Query("term") searchTerm: String,
-                         @Query("location") location: String) : Call<Any>
+                         @Query("location") location: String) : Call<BusinessSearchData>
 
     @GET("businesses/search")
     fun searchRestrauntsWitRadius(@Header("Authorization") authHeader: String
                                   , @Query("term") searchTerm: String
                                   ,@Query("location") location: String
-                                  ,@Query("radius") radius: Int) : Call<Any>
+                                  ,@Query("radius") radius: Int) : Call<BusinessSearchData>
 
     @GET("businesses/search")
     fun searchRestrauntsWitCat(@Header("Authorization") authHeader: String
                                , @Query("term") searchTerm: String
                                ,@Query("location") location: String
-                               ,@Query("categories") categories: String) : Call<Any>
+                               ,@Query("categories") categories: String) : Call<BusinessSearchData>
 
     // add price, and open now @GET calls later
 
+
     /**
+     *
+    // add this in another data class, specifically for reviews
     // https://api.yelp.com/v3/businesses/{id}/reviews
     @GET("businesses/{id}/reviews")
     fun getReviews(@Header("Authorization") authHeader: String
-                         , @Query("id") reviewID: String) : Call<Any>
+                   , @Path("id") id: Int) : Call<Any>
     */
-
 }

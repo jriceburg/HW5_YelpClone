@@ -2,11 +2,25 @@ package com.example.hw5_yelpclone
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
+
+    private val BASE_URL = "https://api.yelp.com/v3/"
+    private val TAG = "MainActivity"
+    private val API_KEY =
+        "K06U41XThnXC4Z2YML7j_2BGx1ceL__GH-zyWdvQ4FvUX8bTUabmCd_tVkZTytXgnaY7xgCKDZ5WBoY0EvXVs2DvZ6pW0DEI_kEMm4FlkjVf4YuZ-Bf8hY94EnqZXnYx"
+
+    private val Client_ID = "Yv-690SdYy2hTbkyo687wg"
 
     val restaurants = ArrayList<RestaurantInfo>()
 
@@ -29,7 +43,53 @@ class MainActivity : AppCompatActivity() {
         val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         recylcler_view.addItemDecoration(dividerItemDecoration)
 
+        // Creating a Retrofit Instance
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+
+
+        // Invoke API Call
+        // create API call that will to call the interface
+        val yelpUserAPI =retrofit.create(UserService::class.java)
+        // in the body of the
+
+        // once this is working correctly, move into separate function
+        yelpUserAPI.searchRestraunts("Bearer $API_KEY","pizza","New Britain")
+            .enqueue(object : Callback<BusinessSearchData>{
+                override fun onFailure(call: Call<BusinessSearchData>, t: Throwable) {
+                    Log.d(TAG,": OnFailure $t")
+                }
+
+                override fun onResponse(call: Call<BusinessSearchData>,
+                                        response: Response<BusinessSearchData>) {
+                    Log.d(TAG,": OnResponse $response")
+                    // do something with the data
+
+                    val body = response.body()
+
+                    if (body == null){
+                        Log.w(TAG, "Valid response was not received")
+                        return
+                    }
+
+
+                }
+                
+            })
     }
+
+    fun userSearch(view: View){
+
+        val foodTerm = et_food_search.text
+        val location = et_location_search.text
+
+        Log.d(TAG,": Food search: $foodTerm, Location search: $location")
+
+    }
+
+
+
 
     // A helper function to create specified amount of dummy data
     private fun createData(size : Int): ArrayList<RestaurantInfo>{

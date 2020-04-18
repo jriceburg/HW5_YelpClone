@@ -33,7 +33,7 @@ class MyRecyclerAdapter(private val restaurantList: ArrayList<RestaurantInfo>)
         val ratingBar       = itemView.ratingBar
         val distance        = itemView.tv_distance
         val address         = itemView.tv_address
-        val category        = itemView.tv_cat
+        val category        = itemView.tv_cat1
         val businessImg   = itemView.image_restaurant
         val price           = itemView.tv_price
 

@@ -18,12 +18,13 @@ data class BusinessData(
     val distance : Double, // Distance in meters from the search location. This returns meters regardless of the locale.
     val location : Locale, // Location of this business, including address, city, state, zip code and country.
     val id : String, // Unique Yelp ID of this business.
-    val categories : Category, // List of category title and alias pairs associated with this business.
+    val categories : List<Category>, // List of category title and alias pairs associated with this business.
     val image_url : String // URL of photo for this business.
 )
 
 data class Category(
-    val alias : String,// Alias of a category, when searching for business in certain categories, use alias rather than the title.
+    val alias : String,// Alias of a category, when searching for business in certain categories,
+    // use alias rather than the title.
     val title : String // Title of a category for display purpose.
 )
 
