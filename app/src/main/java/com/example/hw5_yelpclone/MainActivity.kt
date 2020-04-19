@@ -28,6 +28,14 @@ class MainActivity : AppCompatActivity() {
     val restaurants = ArrayList<BusinessData>()
     val adapter = MyRecyclerAdapter(this,restaurants)
 
+    // Creating a Retrofit Instance
+    val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create()).build()
+
+    // Invoke API Call
+    // create API call that will to call the interface
+    val yelpUserAPI =retrofit.create(UserService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,48 +53,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun termLocationSearch( term :String,  location : String){
-
-        // Creating a Retrofit Instance
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-
-        // Invoke API Call
-        // create API call that will to call the interface
-        val yelpUserAPI =retrofit.create(UserService::class.java)
-        // in the body of the
-        // once this is working correctly, move into separate function
-
-        yelpUserAPI.searchRestraunts("Bearer $API_KEY",term,location)
-        //yelpUserAPI.searchRestraunts("Bearer $API_KEY","pizza","new britain")
-            .enqueue(object : Callback<BusinessSearchData>{
-                override fun onFailure(call: Call<BusinessSearchData>, t: Throwable) {
-                    Log.d(TAG,": OnFailure $t")
-                }
-
-                override fun onResponse(call: Call<BusinessSearchData>,
-                                        response: Response<BusinessSearchData>) {
-                    Log.d(TAG,": OnResponse $response")
-                    // do something with the data
-
-                    val body = response.body()
-
-                    if (body == null){
-                        Log.w(TAG, "Valid response was not received")
-                        return
-                    }
-
-                    restaurants.addAll(body.businesses)
-                    adapter.notifyDataSetChanged()
-                }
-            })
-    }
-
     fun userSearch(view: View){
 
-        val foodTerm = et_food_search.text.toString()
-        val location = et_location_search.text.toString()
+        val foodTerm    = et_food_search.text.toString()
+        val location    = et_location_search.text.toString()
+        val radius      = et_radius.text.toString()
 
         Log.d(TAG,": Food search: $foodTerm, Location search: $location")
 
@@ -104,17 +75,69 @@ class MainActivity : AppCompatActivity() {
             dialogBox.show()
         }
         et_location_search.hideKeyboard()
-        termLocationSearch( foodTerm,  location)
-
-
-
+        // Invoke API Call to endpoint
+        if(radius.isBlank()){
+            // user did not enter a radius input
+            termLocationSearch( foodTerm,  location)
+        }else{
+            // user did enter a radius input
+            val toMeter = 1609
+            val radiusMiles = radius.toInt()*toMeter
+            termLocationRadiusSearch(foodTerm,location,radiusMiles)
+        }
     }
 
-    fun View.hideKeyboard() {
+    private fun termLocationSearch( term :String,  location : String){
+        //yelpUserAPI.searchRestraunts("Bearer $API_KEY","pizza","new britain")
+        yelpUserAPI.searchRestraunts("Bearer $API_KEY",term,location)
+            .enqueue(object : Callback<BusinessSearchData>{
+                override fun onFailure(call: Call<BusinessSearchData>, t: Throwable) {
+                    Log.d(TAG,": OnFailure $t")
+                }
+                override fun onResponse(call: Call<BusinessSearchData>,
+                                        response: Response<BusinessSearchData>) {
+                    Log.d(TAG,": OnResponse $response")
+                    // do something with the data
+
+                    val body = response.body()
+                    if (body == null){
+                        Log.w(TAG, "Valid response was not received")
+                        return
+                    }
+                    restaurants.addAll(body.businesses)
+                    adapter.notifyDataSetChanged()
+                }
+            })
+    }
+
+    private fun termLocationRadiusSearch( term :String,  location : String, radius : Int){
+        yelpUserAPI.searchRestrauntsWitRadius("Bearer $API_KEY",term,location,radius )
+            .enqueue(object : Callback<BusinessSearchData>{
+                override fun onFailure(call: Call<BusinessSearchData>, t: Throwable) {
+                    Log.d(TAG,": OnFailure $t")
+                }
+                override fun onResponse(call: Call<BusinessSearchData>,
+                                        response: Response<BusinessSearchData>) {
+                    Log.d(TAG,": OnResponse $response")
+                    // do something with the data
+
+                    val body = response.body()
+                    if (body == null){
+                        Log.w(TAG, "Valid response was not received")
+                        return
+                    }
+                    restaurants.addAll(body.businesses)
+                    adapter.notifyDataSetChanged()
+                }
+            })
+    }
+
+    private fun View.hideKeyboard() {
         val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
+
 
 
     /**
