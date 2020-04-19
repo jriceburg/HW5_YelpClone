@@ -1,36 +1,123 @@
 package com.example.hw5_yelpclone
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-    val restaurants = ArrayList<RestaurantInfo>()
+    private val BASE_URL = "https://api.yelp.com/v3/"
+    private val TAG = "MainActivity"
+    private val API_KEY =
+        "K06U41XThnXC4Z2YML7j_2BGx1ceL__GH-zyWdvQ4FvUX8bTUabmCd_tVkZTytXgnaY7xgCKDZ5WBoY0EvXVs2DvZ6pW0DEI_kEMm4FlkjVf4YuZ-Bf8hY94EnqZXnYx"
+
+    private val Client_ID = "Yv-690SdYy2hTbkyo687wg"
+
+    val restaurants = ArrayList<BusinessData>()
+    val adapter = MyRecyclerAdapter(this,restaurants)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recylcler_view.adapter = MyRecyclerAdapter(createData(10))
+        recycler_view.adapter = adapter
 
         // default vertical. the LayoutManager is responsible for how the items are shown
-        recylcler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = LinearLayoutManager(this)
         // if you want, you can make the layout of the recyclerview horizontal as follows
         //recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        /*
-        You can decorate the items using various decorators attached to the recyclerview
-        such as the DividerItemDecoration:
-         */
-
         val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        recylcler_view.addItemDecoration(dividerItemDecoration)
+        recycler_view.addItemDecoration(dividerItemDecoration)
 
     }
 
+    fun termLocationSearch( term :String,  location : String){
+
+        // Creating a Retrofit Instance
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+
+        // Invoke API Call
+        // create API call that will to call the interface
+        val yelpUserAPI =retrofit.create(UserService::class.java)
+        // in the body of the
+        // once this is working correctly, move into separate function
+
+        yelpUserAPI.searchRestraunts("Bearer $API_KEY",term,location)
+        //yelpUserAPI.searchRestraunts("Bearer $API_KEY","pizza","new britain")
+            .enqueue(object : Callback<BusinessSearchData>{
+                override fun onFailure(call: Call<BusinessSearchData>, t: Throwable) {
+                    Log.d(TAG,": OnFailure $t")
+                }
+
+                override fun onResponse(call: Call<BusinessSearchData>,
+                                        response: Response<BusinessSearchData>) {
+                    Log.d(TAG,": OnResponse $response")
+                    // do something with the data
+
+                    val body = response.body()
+
+                    if (body == null){
+                        Log.w(TAG, "Valid response was not received")
+                        return
+                    }
+
+                    restaurants.addAll(body.businesses)
+                    adapter.notifyDataSetChanged()
+                }
+            })
+    }
+
+    fun userSearch(view: View){
+
+        val foodTerm = et_food_search.text.toString()
+        val location = et_location_search.text.toString()
+
+        Log.d(TAG,": Food search: $foodTerm, Location search: $location")
+
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Search term missing")
+        dialog.setMessage("Search term & location cannot be empty. Please enter a search term & location")
+        // Set an icon, optional
+        dialog.setIcon(android.R.drawable.ic_delete)
+        dialog.setNeutralButton("Okay") { dialog, which ->
+            // code to run when Cancel is pressed
+        }
+
+        if(et_food_search.text.isBlank() || et_location_search.text.isBlank()){
+            val dialogBox = dialog.create()
+            dialogBox.show()
+        }
+        et_location_search.hideKeyboard()
+        termLocationSearch( foodTerm,  location)
+
+
+
+    }
+
+    fun View.hideKeyboard() {
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as
+                InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+
+    /**
     // A helper function to create specified amount of dummy data
     private fun createData(size : Int): ArrayList<RestaurantInfo>{
         for (i in 0..size){
@@ -41,4 +128,5 @@ class MainActivity : AppCompatActivity() {
         }
         return restaurants
     }
+    */
 }

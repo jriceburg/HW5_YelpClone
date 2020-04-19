@@ -5,9 +5,10 @@
     <string name="address">23 Main St, Hartford CT</string>
     <string name="business_name">Bistro</string>
     <string name="category">Comfort Food</string>
-    <string name="price">$$$</string>
+    <string name="price">$$$$</string>
     <string name="business_image">TODO</string>
     <string name="search_for_food">Search for Food</string>
     <string name="enter_location">Enter Location</string>
     <string name="img_search_btn">TODO</string>
+    <string name="category2">Italian</string>
 </resources>
