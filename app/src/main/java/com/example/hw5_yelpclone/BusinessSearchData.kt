@@ -20,7 +20,13 @@ data class BusinessData(
     val id : String, // Unique Yelp ID of this business.
     val categories : List<Category>, // List of category title and alias pairs associated with this business.
     val image_url : String // URL of photo for this business.
-)
+){
+    fun displayDistance(): String {
+        val milesPerMeter = 0.000621371
+        val distanceInMiles = "%.2f".format(distance * milesPerMeter)
+        return "$distanceInMiles mi"
+    }
+}
 
 data class Category(
     val alias : String,// Alias of a category, when searching for business in certain categories,
@@ -37,6 +43,8 @@ data class Locale(
     val state : String,     // state code of this business.
     val zip_code: String    // Zip code of this business.
 )
+
+
 
 
 

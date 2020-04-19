@@ -25,40 +25,41 @@ class MainActivity : AppCompatActivity() {
 
     private val Client_ID = "Yv-690SdYy2hTbkyo687wg"
 
-    val restaurants = ArrayList<RestaurantInfo>()
+    val restaurants = ArrayList<BusinessData>()
+    val adapter = MyRecyclerAdapter(this,restaurants)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recylcler_view.adapter = MyRecyclerAdapter(createData(10))
+        recycler_view.adapter = adapter
 
         // default vertical. the LayoutManager is responsible for how the items are shown
-        recylcler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = LinearLayoutManager(this)
         // if you want, you can make the layout of the recyclerview horizontal as follows
         //recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        /*
-        You can decorate the items using various decorators attached to the recyclerview
-        such as the DividerItemDecoration:
-         */
-
         val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        recylcler_view.addItemDecoration(dividerItemDecoration)
+        recycler_view.addItemDecoration(dividerItemDecoration)
+
+    }
+
+    fun termLocationSearch( term :String,  location : String){
 
         // Creating a Retrofit Instance
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build()
 
-
         // Invoke API Call
         // create API call that will to call the interface
         val yelpUserAPI =retrofit.create(UserService::class.java)
         // in the body of the
-
         // once this is working correctly, move into separate function
-        yelpUserAPI.searchRestraunts("Bearer $API_KEY","pizza","New Britain")
+
+        yelpUserAPI.searchRestraunts("Bearer $API_KEY",term,location)
+        //yelpUserAPI.searchRestraunts("Bearer $API_KEY","pizza","new britain")
             .enqueue(object : Callback<BusinessSearchData>{
                 override fun onFailure(call: Call<BusinessSearchData>, t: Throwable) {
                     Log.d(TAG,": OnFailure $t")
@@ -76,16 +77,16 @@ class MainActivity : AppCompatActivity() {
                         return
                     }
 
-
+                    restaurants.addAll(body.businesses)
+                    adapter.notifyDataSetChanged()
                 }
-
             })
     }
 
     fun userSearch(view: View){
 
-        val foodTerm = et_food_search.text
-        val location = et_location_search.text
+        val foodTerm = et_food_search.text.toString()
+        val location = et_location_search.text.toString()
 
         Log.d(TAG,": Food search: $foodTerm, Location search: $location")
 
@@ -102,8 +103,10 @@ class MainActivity : AppCompatActivity() {
             val dialogBox = dialog.create()
             dialogBox.show()
         }
-
         et_location_search.hideKeyboard()
+        termLocationSearch( foodTerm,  location)
+
+
 
     }
 
@@ -114,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    /**
     // A helper function to create specified amount of dummy data
     private fun createData(size : Int): ArrayList<RestaurantInfo>{
         for (i in 0..size){
@@ -125,4 +128,5 @@ class MainActivity : AppCompatActivity() {
         }
         return restaurants
     }
+    */
 }

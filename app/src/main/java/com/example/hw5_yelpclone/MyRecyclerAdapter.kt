@@ -1,18 +1,58 @@
 package com.example.hw5_yelpclone
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 import kotlinx.android.synthetic.main.row_items.view.*
 
-class MyRecyclerAdapter(private val restaurantList: ArrayList<RestaurantInfo>)
+class MyRecyclerAdapter(val context: Context, private val restaurantList: ArrayList<BusinessData>)
     : RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>() {
 
     var count = 0
-    private val TAG = "MsyRecyclerAdapter"
+    private val TAG = "MyRecyclerAdapter"
 
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        // this is a method to inflate a layout from our xml (row_item.xml) and drop that inside
+        // a ViewHolder (returns the holder) similar to how we inflate a fragment. we have to
+        // use this method to create the views
+
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.row_items,parent,false)
+
+        Log.d(TAG, "onCreateViewHolder: ${count++}")
+
+        return MyViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        // tells us how many rows will be in the list
+        return restaurantList.size
+    }
+    //
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        // get element from the restaurant list at this position replace the contents of the view
+        // with that element items are binded. once you have the view, we have to add the data at the given position
+        // get element from your dataset at this position, replace the contents of the view with that element
+        /*  The layout manager binds the view holder to its data. It does this by calling the
+            adapter's onBindViewHolder() method, and passing the view holder's position in the RecyclerView.
+            The onBindViewHolder() method needs to fetch the appropriate data, and use it to fill
+            in the view holder's layout. For example, if the RecyclerView is displaying a list of
+            names, the method might find the appropriate name in the list, and fill in the view holder's TextView widget.
+         */
+
+        val currentItem = restaurantList[position]
+        Log.d(TAG, "onBindViewHolder: $position")
+        holder.bind(currentItem)
+
+
+    }
     // the ViewHolder class is required for any class that extends the RecyclerView class
     // e.i MyRecyclerAdapter has to have an inner ViewHolder class
 
@@ -28,59 +68,26 @@ class MyRecyclerAdapter(private val restaurantList: ArrayList<RestaurantInfo>)
 
         // itemView represents one row, we use this data to initialize our variables
         // each MyViewHolder object keeps a reference to the 8 views in our row_item3.xml file
-        val businessName    = itemView.tv_Business_Name
-        val numReviews      = itemView.tv_num_reviews
-        val ratingBar       = itemView.ratingBar
-        val distance        = itemView.tv_distance
-        val address         = itemView.tv_address
-        val category        = itemView.tv_cat1
-        val businessImg   = itemView.image_restaurant
-        val price           = itemView.tv_price
 
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        // this is a method to inflate a layout from our xml (row_item.xml) and returns the holder
-        // similar to how we inflate a fragment. we have to use this method to create the views
+        fun bind(business: BusinessData){
+            itemView.tv_Business_Name.text  = business.businessName
+            itemView.tv_num_reviews.text    = "${business.review_count} Reviews"
+            itemView.tv_address.text        = business.location.address1.plus(", ${business.location.city}")
+            itemView.tv_price.text          = business.price
+            itemView.ratingBar.rating       = business.rating.toFloat()
+            itemView.tv_cat1.text           = business.categories[0].title
+            itemView.tv_distance.text       = business.displayDistance()
 
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_items,parent,false)
-
-        Log.d(TAG, "onCreateViewHolder: ${count++}")
-
-        return MyViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        // tells us how many rows will be in the list
-        return restaurantList.size
-
-    }
-    //
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // get element from the restaurant list at this position replace the contents of the view
-        // with that element items are binded. once you have the view, we have to add the data at the given position
-        // get element from your dataset at this position, replace the contents of the view with that element
-        /*  The layout manager binds the view holder to its data. It does this by calling the
-            adapter's onBindViewHolder() method, and passing the view holder's position in the RecyclerView.
-            The onBindViewHolder() method needs to fetch the appropriate data, and use it to fill
-            in the view holder's layout. For example, if the RecyclerView is displaying a list of
-            names, the method might find the appropriate name in the list, and fill in the view holder's TextView widget.
-         */
-
-        val currentItem = restaurantList[position]
-        // we want to dynamically change the content
-        holder.businessName.text    = currentItem.businessName
-        holder.numReviews.text      = currentItem.numReviews.toString().plus(" Reviews  ")
-        //holder.ratingBar.rating     = currentItem.ratingBar.toString()
-        holder.distance.text        = currentItem.distance.toString().plus(" mi")
-        holder.address.text         = currentItem.address
-        holder.category.text        = currentItem.category
-        holder.price.text           = currentItem.price
-        holder.businessImg.setImageResource(currentItem.restaurantImg)
-
-        Log.d(TAG, "onBindViewHolder: $position")
-
+            if(business.image_url.isNotEmpty()){
+                Picasso.get().load(business.image_url)
+                    .placeholder(R.drawable.ic_free_breakfast_black_24dp)
+                    .fit().centerCrop()
+                    .into(itemView.image_restaurant)
+            }else{
+                itemView.image_restaurant.setImageResource(R.drawable.ic_free_breakfast_black_24dp)
+            }
+        }
 
     }
 

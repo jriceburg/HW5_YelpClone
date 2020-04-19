@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/row_items"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <ImageView
         android:id="@+id/image_restaurant"
-        android:layout_width="125dp"
-        android:layout_height="115dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:contentDescription="@string/business_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,13 +24,13 @@
         android:id="@+id/tv_Business_Name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:text="@string/business_name"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
@@ -38,17 +39,18 @@
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="35dp"
         android:numStars="5"
-        android:stepSize="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        android:stepSize="0.1"
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_num_reviews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="35dp"
         android:text="@string/num_reviews"
         app:layout_constraintStart_toEndOf="@+id/ratingBar"
@@ -58,29 +60,30 @@
         android:id="@+id/tv_distance"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
         android:text="@string/distance"
-        app:layout_constraintStart_toEndOf="@+id/tv_num_reviews"
+        app:layout_constraintStart_toEndOf="@+id/tv_price"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="58dp"
         android:text="@string/address"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_cat1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="80dp"
         android:text="@string/category"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_restaurant"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -90,16 +93,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="80dp"
         android:text="@string/price"
-        app:layout_constraintStart_toEndOf="@+id/tv_cat2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_cat2"
-        android:layout_width="82dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/category2"
         app:layout_constraintStart_toEndOf="@+id/tv_cat1"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
