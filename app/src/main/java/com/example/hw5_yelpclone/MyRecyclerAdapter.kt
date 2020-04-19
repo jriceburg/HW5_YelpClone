@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
@@ -50,6 +51,13 @@ class MyRecyclerAdapter(val context: Context, private val restaurantList: ArrayL
         val currentItem = restaurantList[position]
         Log.d(TAG, "onBindViewHolder: $position")
         holder.bind(currentItem)
+
+        // animations
+        holder.itemView.image_restaurant.animation = AnimationUtils.loadAnimation(context,R.anim.fade_transition_animation)
+        holder.itemView.row_items.animation = AnimationUtils.loadAnimation(context,R.anim.fade_scale_amination)
+
+
+
 
 
     }

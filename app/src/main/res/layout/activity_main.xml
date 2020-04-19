@@ -20,9 +20,9 @@
 
     <EditText
         android:id="@+id/et_food_search"
-        android:layout_width="270dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:ems="10"
@@ -34,9 +34,9 @@
 
     <EditText
         android:id="@+id/et_location_search"
-        android:layout_width="270dp"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
         android:autofillHints=""
         android:ems="10"
@@ -49,14 +49,26 @@
         android:id="@+id/btn_search"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
         android:contentDescription="@string/img_search_btn"
         android:onClick="userSearch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintHorizontal_bias="0.946"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_location_searching_black_24dp" />
+
+    <EditText
+        android:id="@+id/et_radius"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/radius"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/et_location_search"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

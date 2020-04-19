@@ -49,6 +49,12 @@ interface UserService {
                                ,@Query("location") location: String
                                ,@Query("categories") categories: String) : Call<BusinessSearchData>
 
+    /**
+     * Optional. A suggested search radius in meters. This field is used as a suggestion to the
+     * search. The actual search radius may be lower than the suggested radius in dense urban
+     * areas, and higher in regions of less business density. If the specified value is too large
+     */
+
     // add price, and open now @GET calls later
 
 
