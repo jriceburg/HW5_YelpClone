@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/review_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/review_item_background"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/review_image"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:contentDescription="@string/review_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_account_box_black_24dp" />
+
+    <View
+        android:id="@+id/tv_horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="5dp"
+        android:background="@color/content_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RatingBar
+        android:id="@+id/reviewBar"
+        style="@android:style/Widget.Holo.Light.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:numStars="5"
+        android:stepSize="0.1"
+        app:layout_constraintStart_toEndOf="@+id/review_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_reviewUser" />
+
+    <TextView
+        android:id="@+id/tv_reviewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/review_user"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/review_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_days_ago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/days_ago"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_review_descripton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/sample_text"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBar" />
+
+    <TextView
+        android:id="@+id/tv_review_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/link_to_full_review"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_review_descripton" />
+
+    <TextView
+        android:id="@+id/tv_review_URL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:autoLink="web"
+        android:layout_marginTop="8dp"
+        android:text="@string/review_url"
+        app:layout_constraintStart_toEndOf="@+id/tv_review_link"
+        app:layout_constraintTop_toBottomOf="@+id/tv_review_descripton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

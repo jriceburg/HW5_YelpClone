@@ -1,21 +1,27 @@
 package com.example.hw5_yelpclone
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Transformation
+import kotlinx.android.synthetic.main.activity_review.view.*
 import kotlinx.android.synthetic.main.row_items.view.*
+
+
 
 class MyRecyclerAdapter(val context: Context, private val restaurantList: ArrayList<BusinessData>)
     : RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>() {
 
     var count = 0
     private val TAG = "MyRecyclerAdapter"
+
 
 
 
@@ -58,8 +64,6 @@ class MyRecyclerAdapter(val context: Context, private val restaurantList: ArrayL
 
 
 
-
-
     }
     // the ViewHolder class is required for any class that extends the RecyclerView class
     // e.i MyRecyclerAdapter has to have an inner ViewHolder class
@@ -97,9 +101,46 @@ class MyRecyclerAdapter(val context: Context, private val restaurantList: ArrayL
             }
         }
 
+            // Set onClickListener to show a toast message for the selected row item in the list
+            init {
+
+                itemView.setOnClickListener{
+                    val selectedItem = adapterPosition
+                    Toast.makeText(itemView.context, "You clicked on ${restaurantList[selectedItem].businessName}",
+                        Toast.LENGTH_SHORT).show()
+
+                    val sendID      =  restaurantList[selectedItem].id
+                    val sendName    =  restaurantList[selectedItem].businessName
+
+                    //Create an Intent object with two parameters: 1) context, 2) class of the activity to launch
+                    val myIntent = Intent(context, ReviewActivity::class.java)
+                    myIntent.putExtra("businessName", sendName)
+                    myIntent.putExtra("reviewID", sendID)
+                    Log.d(TAG,": sending Name : $sendName. Review ID $sendID")
+                    context.startActivity(myIntent)
+
+                }
+
+                /**
+                // Set onLongClickListener to show a toast message and launch second activity
+                itemView.setOnLongClickListener {
+                    val selectedItem = adapterPosition
+                    Toast.makeText(itemView.context, "Opening review for: ${itemView.tv_Business_Name.text}",
+                        Toast.LENGTH_SHORT).show()
+                    Log.d(TAG,": sending: $sendName")
+
+                    // Start the new Activity with startActivity()
+                    //context.startActivity(myIntent)
+
+
+
+                    return@setOnLongClickListener true
+                }
+
+                */
+            }
+
     }
-
-
 }
 
 

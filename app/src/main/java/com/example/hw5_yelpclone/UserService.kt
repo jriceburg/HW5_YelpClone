@@ -57,13 +57,9 @@ interface UserService {
 
     // add price, and open now @GET calls later
 
-
-    /**
-     *
-    // add this in another data class, specifically for reviews
     // https://api.yelp.com/v3/businesses/{id}/reviews
+    // add this in another data class, specifically for reviews
     @GET("businesses/{id}/reviews")
-    fun getReviews(@Header("Authorization") authHeader: String
-                   , @Path("id") id: Int) : Call<Any>
-    */
+    fun getUserReviews(@Header("Authorization") authHeader: String, @Path("id") id: String) : Call<ReviewSearchData>
+
 }

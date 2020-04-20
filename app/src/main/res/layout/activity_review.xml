@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/review_constrintLayout"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context=".ReviewActivity">
+
+    <TextView
+        android:id="@+id/tv_review_title"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="@string/reviews_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btn_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/review_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_review_title" />
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:contentDescription="@string/app_name"
+        android:onClick="finsh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_keyboard_return_black_24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,4 +12,12 @@
     <string name="img_search_btn">TODO</string>
     <string name="category2">Italian</string>
     <string name="radius">Radius (mi)</string>
+    <string name="sample_text">Through our fulltime Software Engineer Program, you’ll develop innovative solutions that impact the day-to-day lives of customers, clients and businesses around the world. You\'ll benefit from a $10+billion ann</string>
+    <string name="days_ago">27 days ago</string>
+    <string name="review_user">User N</string>
+    <string name="review_image">review image</string>
+    <string name="reviews_title">Bar Tavern Reviews</string>
+    <string name="back_btn">back</string>
+    <string name="link_to_full_review">Link to Full Review:</string>
+    <string name="review_url"> Here</string>
 </resources>
