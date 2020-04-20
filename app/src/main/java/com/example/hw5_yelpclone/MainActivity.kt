@@ -60,6 +60,9 @@ class MainActivity : AppCompatActivity() {
 
     fun userSearch(view: View){
 
+        restaurants.clear()
+        adapter.notifyDataSetChanged()
+
         val foodTerm    = et_food_search.text.toString()
         val location    = et_location_search.text.toString()
         val radius      = et_radius.text.toString()

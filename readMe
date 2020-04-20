@@ -1,0 +1,31 @@
+Group Members: Jhmar Galloway and Geovanni Roberts
+Professor: Yusuf Albayram
+Class: CS-407 Mobile App Development
+
+App Description
+The pupose of this app is to mimic the main functionality 
+of Yelp. Therefore this app is a yelp clone. Users are
+able to search for their favorite restaurant using madatory
+inputs of the name of the restaurant and the location.
+
+
+Extra Credit Activities:
+
+1)Animation for the recyler view
+The animation opens the result of serch starting form the
+left.
+
+2) Review Display
+By clicking on the the each search results, the user are
+brought to a different activity that shows the reviews 
+pertaining to that search result
+
+3) Full Reviews
+Upon opening the review section for a particular search 
+result, the user can further click on the review, which
+will then open the web browser and take them to the 
+webpage containing the full review
+
+4)Radius Filter
+Users have the ability to filter the results
+based on a search radius

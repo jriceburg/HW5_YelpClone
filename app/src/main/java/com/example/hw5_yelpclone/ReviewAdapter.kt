@@ -1,12 +1,15 @@
 package com.example.hw5_yelpclone
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.review_items.view.*
@@ -41,6 +44,7 @@ class ReviewAdapter (val context: Context, private val reviewDataList : List<Rev
 
 
     inner class ReviewViewHolder(itermView : View) : RecyclerView.ViewHolder(itermView){
+        var url:String = ""
 
         fun bind(reviews: ReviewInfo){
             itemView.tv_reviewUser.text         = reviews.user.reviewerName
@@ -61,8 +65,20 @@ class ReviewAdapter (val context: Context, private val reviewDataList : List<Rev
             itemView.tv_review_URL.text = urlLink
 
             //        = reviews.reviewURL
+            url = itemView.tv_review_URL.text.toString()
+            itemView.tv_review_URL.text = "Click to Open Reviews"
 
 
+
+        }
+        init {
+            itemView.setOnClickListener{
+                //url = itemView.tv_review_URL.text.toString()
+                //itemView.tv_review_URL.text = "Click to Open Reviews"
+                val browser =  Intent(Intent.ACTION_VIEW)
+                browser.data = Uri.parse(url)
+                context.startActivity(browser)
+            }
         }
 
 
